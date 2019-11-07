@@ -1,0 +1,38 @@
+//Breaks an interval into smaller intervals of length 2 to the nth power where all numbers have the same prefix in binary representation
+
+#include <stdio.h>
+
+void f(int begin, int end)
+{
+    int lower = begin, upper = lower;
+    
+    while (upper <= end)
+    {
+        for (int i = 1, j = 1;1; j *= 2, i += j)
+        {
+            if ((upper ^ (upper + i)) == i && upper + i < end)
+                continue;
+            else
+                upper = upper + i - j;
+            printf("[%d,%d]\n", lower, upper);
+            break;
+        }
+        lower = upper + 1; upper = lower;
+    }
+}
+
+int main ()
+{
+    int begin, end;
+    int play = 1;
+    while (play == 1)
+    {
+        printf("begin = ");
+        scanf("%d", &begin);
+        printf("end = ");
+        scanf("%d", &end);
+        f(begin, end);
+        printf("Again? (0 to quit, 1 to proceed)");
+        scanf("%d", &play);
+    }
+}
